@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inspiration&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css" />
+        
+
+    </head>
+    <body>
+        
+        <div class="container">
+            <div class="inner">
+                <div class="box">
+                    
+                    <div class="text">
+                        <i class="start-quote fas fa-quote-left"></i>
+                        <p id="quotes" class="quotes"></p>
+                        <p id="author" class="author"></p>
+
+                    </div>
+                    <label class="button">
+
+                        <p id="newQ">Generate Quote</p>
+                    </label>
+                
+
+                </div>
+            </div>
+        </div>
+        <script>
+            const quotes=document.getElementById("quotes");
+            const author=document.getElementById("author");
+            const newQ=document.getElementById("newQ");
+         
+        let realData="";
+        let quotesData="";
+        
+        const getNewQuotes = () => {
+            let rnum= Math.floor(Math.random()*10);
+            quotesData= realData.results[rnum];
+
+            quotes.innerText = `${quotesData.content}`;
+            quotesData.author == null
+               ?(author.innerText = "unKnown")
+               :(author.innerText = `${quotesData.author}`);
+
+        };
+          const getQuotes = async () =>{
+            const api= "https://api.quotable.io/quotes";
+            try{
+                let data=await fetch(api);
+                realData= await data.json();
+                getNewQuotes();
+
+            } catch(error){}
+        };
+        
+        newQ.addEventListener("click", getNewQuotes);
+        getQuotes();
+        </script>
+       
+    </body>
+</html>
